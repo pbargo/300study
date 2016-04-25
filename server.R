@@ -69,7 +69,7 @@ shinyServer(function(input, output,session) {
       a <- input$x
       b <- input$y
       string <- paste0("mydata$",input$x)
-      colors <- heat.colors(length(unique(eval(parse(text=string)))))
+      colors <- rainbow(length(unique(eval(parse(text=string)))))
       boxplot(eval(parse(text=paste0(b,'~',a))),data = mydata, xlab = toString(input$x), ylab = toString(input$y), col = colors)
   }
   })
