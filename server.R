@@ -70,6 +70,7 @@ shinyServer(function(input, output,session) {
     
     if (is.numeric(x) && is.numeric(y)) {
       plot(x,y, xlab = toString(input$x), ylab = toString(input$y), main = mytitle)
+      abline(lm(y~x), col = 'red')
   }
     else if (is.factor(x) && is.numeric(y)) {
       a <- input$x
