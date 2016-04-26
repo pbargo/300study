@@ -28,16 +28,18 @@ shinyUI(fluidPage(
       ),
       tags$hr(),
       checkboxInput('header', 'Header', TRUE),
-      radioButtons('sep', 'Separator',
+      splitLayout(
+        radioButtons('sep', 'Separator',
                    c(Comma=',',
                      Semicolon=';',
                      Tab='\t'),
                    ','),
-      radioButtons('quote', 'Quote',
+        radioButtons('quote', 'Quote',
                    c(None='',
-                     'Double Quote'='"',
-                     'Single Quote'="'"),
+                     'Double'='"',
+                     'Single'="'"),
                    '"')
+      )
       ),
       titlePanel("Choose plotting variables"),
       wellPanel(
@@ -46,8 +48,17 @@ shinyUI(fluidPage(
                            c("")),
                selectInput('y', 'Y-axis',
                            c(""))
-               )
       ),
+      titlePanel("Filter anatomic site"),
+      wellPanel(
+        radioButtons('anatSite', 'Choose Site:',
+                     c('All' = '',
+                       'Arm'='A',
+                       'Left Face'='L',
+                       'Right Face'='R'),
+                     '')
+      )
+    ),
     mainPanel(
       plotOutput('myPlot'),
       tableOutput('contents')

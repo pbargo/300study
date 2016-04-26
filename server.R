@@ -56,21 +56,28 @@ shinyServer(function(input, output,session) {
     if (input$x == "")
       return (NULL)
     
+    if (input$anatSite == '') {
+      mydataSub <- mydata
+      mytitle <- 'All'}
+    else {
+      mydataSub <- subset(mydata, site  == input$anatSite)
+      mytitle <- toString(input$anatSite)}
 
-    string <- paste0("mydata$",input$x)
+    string <- paste0("mydataSub$",input$x)
     x <- eval(parse(text=string))
-    string <- paste0("mydata$",input$y)
+    string <- paste0("mydataSub$",input$y)
     y <- eval(parse(text=string))
     
     if (is.numeric(x) && is.numeric(y)) {
-      plot(x,y, xlab = toString(input$x), ylab = toString(input$y))
+      plot(x,y, xlab = toString(input$x), ylab = toString(input$y), main = mytitle)
   }
     else if (is.factor(x) && is.numeric(y)) {
       a <- input$x
       b <- input$y
-      string <- paste0("mydata$",input$x)
+      string <- paste0("mydataSub$",input$x)
       colors <- rainbow(length(unique(eval(parse(text=string)))))
-      boxplot(eval(parse(text=paste0(b,'~',a))),data = mydata, xlab = toString(input$x), ylab = toString(input$y), col = colors)
+      boxplot(eval(parse(text=paste0(b,'~',a))),data = mydataSub, 
+              xlab = toString(input$x), ylab = toString(input$y), col = colors, main = mytitle)
   }
   })
 })
